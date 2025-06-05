@@ -181,7 +181,7 @@ footer {
   max-width: 25rem;
   display: flex;
   flex-direction: column;
-  margin: var(--space-m) auto;
+  margin: 0 auto var(--space-xl) auto;
 }
 
 .input-container label {
