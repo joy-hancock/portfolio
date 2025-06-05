@@ -190,6 +190,7 @@ footer {
 
 .project-search {
   --input-border: var(--text);
+  --input-padding: 2.5em;
 }
 
 .fa-magnifying-glass {
