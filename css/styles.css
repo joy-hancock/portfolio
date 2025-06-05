@@ -178,9 +178,10 @@ footer {
 .input-container {
   --flow-space: var(--space-3xs);
   position: relative;
-  max-width: 20rem;
+  max-width: 25rem;
   display: flex;
   flex-direction: column;
+  margin: var(--space-m) auto;
 }
 
 .input-container label {
