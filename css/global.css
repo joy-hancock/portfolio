@@ -63,122 +63,6 @@
 
 /********************************/
 
-/* AUTO GRID */
-
-/* Related Every Layout: https://every-layout.dev/layouts/grid/
-	More info on the flexible nature: https://piccalil.li/tutorial/create-a-responsive-grid-layout-with-no-media-queries-using-css-grid/
-	A flexible layout that will create an auto-fill grid with
-	configurable grid item sizes
-
-	CUSTOM PROPERTIES AND CONFIGURATION
-	--gutter (2rem): This defines the space
-	between each item.
-
-	--grid-min-item-size (14rem): How large each item should be
-	ideally, as a minimum.
-
-	--grid-placement (auto-fill): Set either auto-fit or auto-fill
-	to change how empty grid tracks are handled */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(
-    var(--grid-placement, auto-fill),
-    minmax(var(--grid-min-item-size, 16rem), 1fr)
-  );
-  gap: var(--gutter, var(2rem));
-}
-
-/* A split 50/50 layout */
-.grid[data-layout='50-50'] {
-  --grid-placement: auto-fit;
-  --grid-min-item-size: clamp(16rem, 50vw, 33rem);
-  /* gap: var(--space-xs); */
-}
-
-/* Three column grid layout */
-.grid[data-layout='thirds'] {
-  --grid-placement: auto-fit;
-  --grid-min-item-size: clamp(16rem, 33%, 20rem);
-}
-
-/********************************/
-
-/* REPEL */
-
-/* A little layout that pushes items away from each other where
-	there is space in the viewport and stacks on small viewports CUSTOM PROPERTIES
-	AND CONFIGURATION --gutter (1rem): This defines the space between each
-	item. --repel-vertical-alignment (center): How items should align vertically.
-	Can be any acceptable flexbox alignment value. */
-
-.repel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: var(--repel-vertical-alignment, center);
-  gap: var(--gutter, 1rem);
-  flex-direction: row;
-}
-.repel[data-nowrap] {
-  flex-wrap: nowrap;
-}
-
-/********************************/
-
-/* SIDEBAR */
-
-/* More info: https://every-layout.dev/layouts/sidebar/
-	A layout that allows you to have a flexible main content area
-	and a "fixed" width sidebar that sits on the left or right.
-	If there is not enough viewport space to fit both the sidebar
-	width *and* the main content minimum width, they will stack
-	on top of each other
-
-	CUSTOM PROPERTIES AND CONFIGURATION
-	--gutter (1rem): This defines the space
-	between the sidebar and main content.
-
-	--sidebar-target-width (20rem): How large the sidebar should be
-
-	--sidebar-content-min-width (50%): The minimum size of the main content area
-
-	EXCEPTIONS
-	.sidebar[data-direction='rtl']: flips the sidebar to be on the right
-	*/
-
-.sidebar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gutter, var(--space-s-l));
-}
-
-.sidebar:not([data-direction]) > :first-child {
-  flex-basis: var(--sidebar-target-width, 20rem);
-  flex-grow: 1;
-}
-
-.sidebar:not([data-direction]) > :last-child {
-  flex-basis: 0;
-  flex-grow: 999;
-  min-width: var(--sidebar-content-min-width, 50%);
-}
-
-.sidebar[data-reversed] {
-  flex-direction: row-reverse;
-}
-
-.sidebar[data-direction='rtl'] > :last-child {
-  flex-basis: var(--sidebar-target-width, 20rem);
-  flex-grow: 1;
-}
-
-.sidebar[data-direction='rtl'] > :first-child {
-  flex-basis: 0;
-  flex-grow: 999;
-  min-width: var(--sidebar-content-min-width, 50%);
-}
-
 /********************************/
 
 /* SWITCHER */
@@ -234,6 +118,7 @@
 }
 
 /********************************/
+
 /* 
 VISUALLY HIDDEN
 Info: https://piccalil.li/quick-tip/visually-hidden/ 
@@ -276,7 +161,7 @@ h1 {
 
 h2 {
   font-size: var(--step-4);
-  text-align: cx;
+  text-align: center;
 }
 
 h3 {
