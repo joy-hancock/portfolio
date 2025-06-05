@@ -122,6 +122,7 @@
 /****************************************/
 
 /* Custom styles */
+
 header,
 footer {
   padding-block: var(--space-s);
@@ -202,7 +203,7 @@ footer {
 .cards {
   display: grid;
   grid-gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(23rem, 0.33fr));
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 0.33fr));
   justify-content: center;
 }
 
@@ -472,4 +473,14 @@ footer {
   top: 300px;
   width: 100%;
   pointer-events: none;
+}
+
+/* ----------------
+min-width: 768px
+------------------ */
+
+@media (max-width: 768px) {
+  .cards {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 0.33fr));
+  }
 }
