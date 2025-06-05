@@ -433,7 +433,7 @@ footer {
   --input-radius: 50%;
   --input-padding: none;
   --input-height: 50px;
-  --input-text: var(--background);
+  --input-text: var(--white);
   width: 50px;
   position: fixed;
   bottom: 50px;
