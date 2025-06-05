@@ -351,10 +351,10 @@ footer {
   transition: all 0.15s ease-in-out;
 }
 .theme-checkbox:hover + .slider {
-  background-color: var(--primary);
+  background-color: var(--purple);
 }
 
-.theme-checkbox:active + .slider,
+.theme-checkbox:hover .theme-checkbox:active + .slider,
 .theme-checkbox:focus-visible + .slider {
   outline: 2px solid var(--accent);
   outline-offset: var(--focus-offset, 0.2lh);
@@ -373,12 +373,11 @@ footer {
 }
 
 input:checked + .slider {
-  background-color: var(--light-mint);
+  background-color: black;
 }
 
 input:checked + .slider:before {
   transform: translateX(26px);
-  background-color: var(--dark-green);
 }
 
 .slider.round {
@@ -392,23 +391,9 @@ input:checked + .slider:before {
 .light-icon,
 .dark-icon {
   z-index: 1;
-  color: var(--white);
-  line-height: 0;
-}
-
-input:checked ~ .slider .light-icon {
-  color: var(--dark-green);
-}
-input:checked ~ .slider .dark-icon {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-input:not(:checked) ~ .slider .light-icon {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-input:not(:checked) ~ .slider .dark-icon {
   color: var(--yellow);
+  line-height: 0;
+  font-size: 1.25em;
 }
 
 footer {
