@@ -1,0 +1,351 @@
+/* Composition utility classes */
+
+/* Cover */
+
+/* Creates a layout where header is pushed to top, footer is pushed to bottom, and main content takes the remaining space */
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.cover > :first-child:not(main) {
+  margin-block-start: 0;
+}
+
+.cover > :last-child:not(main) {
+  margin-block-end: 0;
+}
+
+.cover > main {
+  margin: 0 0 auto 0;
+}
+
+/********************************/
+
+/* CLUSTER */
+
+/* More info: https://every-layout.dev/layouts/cluster/
+	A layout that lets you distribute items with consitent
+	spacing, regardless of their size
+
+	CUSTOM PROPERTIES AND CONFIGURATION
+	--gutter (1rem): This defines the space
+	between each item.
+
+	--cluster-horizontal-alignment (flex-start): How items should align
+	horizontally. Can be any acceptable flexbox aligmnent value.
+
+	--cluster-vertical-alignment (center): How items should align vertically.
+	Can be any acceptable flexbox alignment value.
+	*/
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gutter, 1rem);
+  justify-content: var(--cluster-horizontal-alignment, flex-start);
+  align-items: var(--cluster-vertical-alignment, center);
+}
+
+/********************************/
+
+/* FLOW */
+
+/* More Info: Like the Every Layout stack: https://every-layout.dev/layouts/stack/
+	Info about this implementation: https://piccalil.li/blog/my-favourite-3-lines-of-css/
+	*/
+
+.flow > * + * {
+  margin-block-start: var(--flow-space, 1em);
+}
+
+/********************************/
+
+/* AUTO GRID */
+
+/* Related Every Layout: https://every-layout.dev/layouts/grid/
+	More info on the flexible nature: https://piccalil.li/tutorial/create-a-responsive-grid-layout-with-no-media-queries-using-css-grid/
+	A flexible layout that will create an auto-fill grid with
+	configurable grid item sizes
+
+	CUSTOM PROPERTIES AND CONFIGURATION
+	--gutter (2rem): This defines the space
+	between each item.
+
+	--grid-min-item-size (14rem): How large each item should be
+	ideally, as a minimum.
+
+	--grid-placement (auto-fill): Set either auto-fit or auto-fill
+	to change how empty grid tracks are handled */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(
+    var(--grid-placement, auto-fill),
+    minmax(var(--grid-min-item-size, 16rem), 1fr)
+  );
+  gap: var(--gutter, var(2rem));
+}
+
+/* A split 50/50 layout */
+.grid[data-layout='50-50'] {
+  --grid-placement: auto-fit;
+  --grid-min-item-size: clamp(16rem, 50vw, 33rem);
+  /* gap: var(--space-xs); */
+}
+
+/* Three column grid layout */
+.grid[data-layout='thirds'] {
+  --grid-placement: auto-fit;
+  --grid-min-item-size: clamp(16rem, 33%, 20rem);
+}
+
+/********************************/
+
+/* REPEL */
+
+/* A little layout that pushes items away from each other where
+	there is space in the viewport and stacks on small viewports CUSTOM PROPERTIES
+	AND CONFIGURATION --gutter (1rem): This defines the space between each
+	item. --repel-vertical-alignment (center): How items should align vertically.
+	Can be any acceptable flexbox alignment value. */
+
+.repel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: var(--repel-vertical-alignment, center);
+  gap: var(--gutter, 1rem);
+  flex-direction: row;
+}
+.repel[data-nowrap] {
+  flex-wrap: nowrap;
+}
+
+/********************************/
+
+/* SIDEBAR */
+
+/* More info: https://every-layout.dev/layouts/sidebar/
+	A layout that allows you to have a flexible main content area
+	and a "fixed" width sidebar that sits on the left or right.
+	If there is not enough viewport space to fit both the sidebar
+	width *and* the main content minimum width, they will stack
+	on top of each other
+
+	CUSTOM PROPERTIES AND CONFIGURATION
+	--gutter (1rem): This defines the space
+	between the sidebar and main content.
+
+	--sidebar-target-width (20rem): How large the sidebar should be
+
+	--sidebar-content-min-width (50%): The minimum size of the main content area
+
+	EXCEPTIONS
+	.sidebar[data-direction='rtl']: flips the sidebar to be on the right
+	*/
+
+.sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gutter, var(--space-s-l));
+}
+
+.sidebar:not([data-direction]) > :first-child {
+  flex-basis: var(--sidebar-target-width, 20rem);
+  flex-grow: 1;
+}
+
+.sidebar:not([data-direction]) > :last-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-width: var(--sidebar-content-min-width, 50%);
+}
+
+.sidebar[data-reversed] {
+  flex-direction: row-reverse;
+}
+
+.sidebar[data-direction='rtl'] > :last-child {
+  flex-basis: var(--sidebar-target-width, 20rem);
+  flex-grow: 1;
+}
+
+.sidebar[data-direction='rtl'] > :first-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-width: var(--sidebar-content-min-width, 50%);
+}
+
+/********************************/
+
+/* SWITCHER */
+
+/* More info: https://every-layout.dev/layouts/switcher/
+	A layout that allows you to lay **2** items next to each other
+	until there is not enough horizontal space to allow that.
+
+	CUSTOM PROPERTIES AND CONFIGURATION
+	--gutter: This defines the space
+	between each item
+
+	--switcher-target-container-width (40rem): How large the container
+	needs to be to allow items to sit inline with each other
+
+	--switcher-vertical-alignment (flex-start): How items should align vertically.
+	Can be any acceptable flexbox alignment value.
+	*/
+
+.switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gutter, 1rem);
+  align-items: var(--switcher-vertical-alignment, flex-start);
+}
+
+.switcher > * {
+  flex-grow: 1;
+  flex-basis: calc(
+    (var(--switcher-target-container-width, 40rem) - 100%) * 999
+  );
+}
+
+/* Max 2 items,
+	so anything greater than 2 is full width */
+.switcher > :nth-child(n + 3) {
+  flex-basis: 100%;
+}
+
+/********************************/
+
+/* WRAPPER */
+
+/* A common wrapper/container */
+
+.wrapper {
+  --gutter: var(--space-m);
+  padding-inline-start: var(--gutter, 1rem);
+  padding-inline-end: var(--gutter, 1rem);
+  position: relative;
+  width: 80vw;
+  margin: auto;
+}
+
+/********************************/
+/* 
+VISUALLY HIDDEN
+Info: https://piccalil.li/quick-tip/visually-hidden/ 
+*/
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+/********************************/
+
+/* Global body styles */
+
+body {
+  font-family: var(--font-base);
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--background);
+  color: var(--text);
+  font-size: var(--step-0);
+  font-size-adjust: from-font;
+  line-height: var(--lh-standard);
+}
+
+:is(h1, h2, h3, h4) {
+  line-height: var(--lh-fine);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--step-5);
+}
+
+h2 {
+  font-size: var(--step-4);
+  text-align: cx;
+}
+
+h3 {
+  font-size: var(--step-2);
+}
+a {
+  transition: all 0.15s ease;
+  padding: 0.2em;
+  border-radius: 0.25rem;
+}
+
+a:hover {
+  text-underline-offset: 0.2lh;
+  background-color: var(--primary);
+  color: var(--background);
+}
+
+a:has(img):hover {
+  background: none;
+}
+
+:is(h1, h2, h3, h4) a {
+  text-decoration-thickness: 0.1ex;
+  text-underline-offset: 0.2ex;
+}
+
+:is(h1, h2, h3, h4) a:hover {
+  text-underline-offset: 0.3ex;
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent, currentColor);
+  outline-offset: var(--focus-offset, 0.2lh);
+}
+
+/* Firefox is the only browser that doesn't outline the whole element unless you make it display: inline-block. That in itself causes multiple flow issues so we can detect it, using its own vendor prefix and reduce focus offset
+*/
+@supports (-moz-appearance: none) {
+  :root {
+    --focus-offset: 0.08em;
+  }
+}
+
+::selection {
+  color: var(--background);
+  background: var(--text);
+}
+
+input {
+  accent-color: var(--accent);
+  transition: all 0.15s ease-in-out;
+}
+
+:is(
+    input:not([type='checkbox'], [type='radio'], [type='color']),
+    select,
+    textarea,
+    button
+  ) {
+  border: 1px solid var(--input-border, #fff);
+  background: var(--input-bg, #ffffff);
+  color: var(--input-text, #000000);
+  line-height: var(--input-lh, 1.1);
+  height: var(--input-height, 2.5em);
+  padding-inline: var(--input-padding, 2em);
+  border-radius: var(--input-radius, 0.25rem);
+  cursor: pointer;
+}
